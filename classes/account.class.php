@@ -81,8 +81,65 @@ class Account{
 
         return $data;
     }
+
+    public function fetchAccount() {
+        // Define the SQL query to select all columns from the 'category' table,
+        // ordering the results by the 'role' column in ascending order.
+        $sql = "SELECT * FROM account ORDER BY role ASC;";
+    
+        // Prepare the SQL statement for execution using a database connection.
+        $query = $this->db->connect()->prepare($sql);
+    
+        // Initialize a variable to hold the fetched data. This will store the results of the query.
+        $data = null;
+    
+        // Execute the prepared SQL query.
+        // If the execution is successful, fetch all the results from the query's result set.
+        // Use fetchAll() to retrieve all rows as an array of associative arrays.
+        if ($query->execute()) {
+            $data = $query->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows as an associative array.
+        }
+    
+        // Return the fetched data. This will be an array of categories, where each category
+        // is represented as an associative array with column names as keys.
+        return $data;
+    }
+
+
+    public function showAll($keyword = '') {
+        // If a keyword is provided, use it for filtering; otherwise, return all rows
+        if (!empty($keyword)) {
+            $sql = "SELECT * FROM account 
+                    WHERE role LIKE CONCAT('%', :keyword, '%') 
+                    OR first_name LIKE CONCAT('%', :keyword, '%')
+                    OR last_name LIKE CONCAT('%', :keyword, '%')
+                    OR username LIKE CONCAT('%', :keyword, '%') 
+                    ORDER BY role ASC;";
+        } else {
+            $sql = "SELECT * FROM account ORDER BY role ASC;";
+        }
+    
+        // Prepare the SQL statement
+        $query = $this->db->connect()->prepare($sql);
+    
+        // Bind the keyword if it's not empty
+        if (!empty($keyword)) {
+            $query->bindParam(':keyword', $keyword);
+        }
+    
+        $data = null; // Initialize the data holder
+    
+        // Execute the query and fetch the results
+        if ($query->execute()) {
+            $data = $query->fetchAll(PDO::FETCH_ASSOC); // Fetch as associative array
+        }
+    
+        return $data; // Return the data
+    }
 }
 
-// $obj = new Account();
+//$obj = new Account();
 
-// $obj->add();
+//$obj->fetchAccount();
+
+//var_dump($obj);

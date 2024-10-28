@@ -1,3 +1,11 @@
+<?php
+    if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest'){
+        header("Location: forbidden.php");
+        exit();
+    }
+?>
+
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -16,6 +24,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column">
             <div class="row flex-grow-1">
