@@ -13,9 +13,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <?php
-                            require_once '../classes/account.class.php';
-                            session_start();
-                            $accountObj = new Account();
+                        require_once '../classes/account.class.php';
+                        session_start();
+                        $accountObj = new Account();
                         ?>
                         <div class="d-flex justify-content-center align-items-center">
                             <form class="d-flex me-2">
@@ -32,18 +32,21 @@
                                     <option value="choose">Choose...</option>
                                     <option value="">All</option>
                                     <?php
-                                        $roleList = $accountObj->fetchAccount();
-                                        foreach ($roleList as $rol) {
+                                    $roleList = $accountObj->fetchAccount();
+                                    foreach ($roleList as $rol) {
                                     ?>
                                         <option value="<?= $rol['role'] ?>"><?= $rol['role'] ?></option>
                                     <?php
-                                        }
+                                    }
                                     ?>
                                 </select>
                             </div>
                         </div>
+                        <div class="page-title-right d-flex align-items-center">
+                            <a id="add-product" href="#" class="btn btn-primary brand-bg-color">Add Product</a>
+                        </div>
                     </div>
-                    
+
                     <div class="table-responsive">
                         <table id="table-accounts" class="table table-centered table-nowrap mb-0">
                             <thead class="table-light">
